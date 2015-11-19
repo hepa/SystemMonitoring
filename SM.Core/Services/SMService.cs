@@ -18,7 +18,6 @@ namespace SM.Core.Services
 
         public virtual void OnStartUp()
         {
-            
         }
 
         public virtual void OnStop()

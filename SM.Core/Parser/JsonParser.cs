@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -25,9 +26,10 @@ namespace SM.Core.Parser
                     || record.SensorName == "Core Max"
                     || record.SensorName == "CPU1/2"                    
                     || record.SensorName == "GPU Thermal Diode"
-                    || record.SensorName == "GPU D3D Usage"
+                    || (record.SensorName == "GPU D3D Usage" && record.SensorClass.Contains("Radeon"))
                     || record.SensorName == "GPU Fan Speed")
                 {
+                    Console.WriteLine(record.SensorName);
                     interestingRecords.Add(record);
                 }
             }
