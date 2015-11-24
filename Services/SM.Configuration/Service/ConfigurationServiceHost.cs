@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data;
+using SM.Configuration.Configuration;
+using SM.Contracts.Models;
 using SM.Core.Services;
 
 namespace SM.Configuration.Service

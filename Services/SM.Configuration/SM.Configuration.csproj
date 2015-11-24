@@ -72,6 +72,10 @@
       <Project>{fa54cb04-cb4e-4dfc-9702-b7d27cf35a6a}</Project>
       <Name>MainDB</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SM.Contracts\SM.Contracts.csproj">
+      <Project>{6812b148-b5d3-4b36-9d69-924922dccc26}</Project>
+      <Name>SM.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SM.Core\SM.Core.csproj">
       <Project>{6b3c11df-e415-45e2-8a60-0d06cda10519}</Project>
       <Name>SM.Core</Name>
@@ -80,6 +84,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Log\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

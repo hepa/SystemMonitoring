@@ -16,7 +16,7 @@ namespace SM.Configuration.Service
                 x.Service<ConfigurationServiceHost>(s =>
                 {
                     s.ConstructUsing(name => new ConfigurationServiceHost());
-                    s.WhenStarted(rs => rs.OnStartUp());
+                    s.WhenStarted(rs => rs.StartService());
                     s.WhenStopped(rs => rs.OnStop());
                 });
 

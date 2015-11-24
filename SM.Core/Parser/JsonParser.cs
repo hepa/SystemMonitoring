@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -34,12 +33,13 @@ namespace SM.Core.Parser
                 }
             }
 
-            const string path = @"c:\sensor\logs.txt";
+            var date = DateTime.UtcNow.ToString("d");
+            string path = string.Format(@"c:\sensor\log-{0}.txt", date);
 
             if (!Directory.Exists(@"c:\sensor"))
             {
                 Directory.CreateDirectory(@"c:\sensor");
-            }
+            }            
 
             if (!File.Exists(path))
             {

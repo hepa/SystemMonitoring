@@ -9,9 +9,10 @@ namespace SM.Core.Services
         public virtual void StartService()
         {
             // 1. Dependency Manager bootup
-            // 2.
+            // 2. Static Warm-up method
+            WarmUp();            
+            // 3. Actual start
             OnStartUp();
-            // 3. Static Warm-up method
             // 4. Start processing requests
             IsStarted = true;
         }
@@ -29,7 +30,7 @@ namespace SM.Core.Services
 
         public void Dispose()
         {
-            OnStop();
+            //OnStop();
         }
     }
 }

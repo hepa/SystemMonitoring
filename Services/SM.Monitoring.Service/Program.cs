@@ -16,14 +16,14 @@ namespace SM.Monitoring.Service
                 x.Service<MonitoringServiceHost>(s =>
                 {
                     s.ConstructUsing(name => new MonitoringServiceHost());                    
-                    s.WhenStarted(rs => rs.OnStartUp());
+                    s.WhenStarted(rs => rs.StartService());
                     s.WhenStopped(rs => rs.OnStop());
                 });
                 
                 x.RunAsLocalSystem();
                 x.SetDescription("System Monitoring - Monitoring Service");
-                x.SetServiceName("SMMonitoringService");
-                x.SetDisplayName("SMMonitoringService");
+                x.SetServiceName("SM.Monitoring.Service");
+                x.SetDisplayName("SM.Monitoring.Service");
             });
         }
     }

@@ -40,14 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\LogLevel.cs" />
     <Compile Include="Models\Codes\InformationCodes.cs" />
     <Compile Include="Models\Codes\WarningCodes.cs" />
     <Compile Include="Models\Codes\ErrorCodes.cs" />
     <Compile Include="Models\Codes\CoreCode.cs" />
     <Compile Include="Messages\Result\Result.cs" />
     <Compile Include="Messages\Result\ResultCode.cs" />
+    <Compile Include="Models\Configuration\GlobalConfigurations.cs" />
+    <Compile Include="Models\Configuration\LogConfigurations.cs" />
     <Compile Include="Models\SensorRecord.cs" />
-    <Compile Include="Models\ServiceConfigurations.cs" />
+    <Compile Include="Models\Configuration\ServiceConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

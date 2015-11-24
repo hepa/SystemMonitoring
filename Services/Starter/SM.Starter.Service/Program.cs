@@ -12,14 +12,14 @@ namespace SM.Starter.Service
                 x.Service<StarterServiceHost>(s =>
                 {
                     s.ConstructUsing(name => new StarterServiceHost());
-                    s.WhenStarted(rs => rs.OnStartUp());
+                    s.WhenStarted(rs => rs.StartService());
                     s.WhenStopped(rs => rs.OnStop());
                 });
 
                 x.RunAsLocalSystem();
                 x.SetDescription("System Monitoring - Starter Service");
-                x.SetServiceName("SMStarterService");
-                x.SetDisplayName("SMStarterService");
+                x.SetServiceName("SM.Starter.Service");
+                x.SetDisplayName("SM.Starter.Service");
             });
         }
     }

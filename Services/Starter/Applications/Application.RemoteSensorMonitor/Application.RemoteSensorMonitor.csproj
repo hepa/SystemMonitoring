@@ -4,15 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D7D54BB0-151C-4A71-A51A-37DA60A65800}</ProjectGuid>
+    <ProjectGuid>{D143DB5B-0FB8-4E6D-A677-540997C651CF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SM.Monitoring</RootNamespace>
-    <AssemblyName>SM.Monitoring</AssemblyName>
+    <RootNamespace>Application.RemoteSensorMonitor</RootNamespace>
+    <AssemblyName>Application.RemoteSensorMonitor</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,7 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,24 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\MonitoringServiceHost.cs" />
+    <Compile Include="RemoteSensorMonitor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Logs\SM.Logs\SM.Logs.csproj">
-      <Project>{659e3d61-08c2-42dc-a2dc-025cecc8c851}</Project>
-      <Name>SM.Logs</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SM.Contracts\SM.Contracts.csproj">
-      <Project>{6812b148-b5d3-4b36-9d69-924922dccc26}</Project>
-      <Name>SM.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SM.Core\SM.Core.csproj">
+    <ProjectReference Include="..\..\..\..\SM.Core\SM.Core.csproj">
       <Project>{6b3c11df-e415-45e2-8a60-0d06cda10519}</Project>
       <Name>SM.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
+    <ProjectReference Include="..\ApplicationSDK\ApplicationSDK.csproj">
+      <Project>{361d5c01-03c3-491f-af03-e0f5b3b76de1}</Project>
+      <Name>ApplicationSDK</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
