@@ -1,6 +1,6 @@
 ﻿using SM.Contracts.Enum;
 
-namespace SM.Contracts.Models
+namespace SM.Contracts.Models.Configuration
 {
     public class LogConfigurations
     {

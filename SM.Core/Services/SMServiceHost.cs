@@ -1,6 +1,7 @@
 ﻿
 using SM.Configuration.Configuration;
 using SM.Contracts.Models;
+using SM.Contracts.Models.Configuration;
 
 namespace SM.Core.Services
 {

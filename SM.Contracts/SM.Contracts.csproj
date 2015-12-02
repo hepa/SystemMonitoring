@@ -49,6 +49,7 @@
     <Compile Include="Messages\Result\ResultCode.cs" />
     <Compile Include="Models\Configuration\GlobalConfigurations.cs" />
     <Compile Include="Models\Configuration\LogConfigurations.cs" />
+    <Compile Include="Models\Configuration\SqlConfigurations.cs" />
     <Compile Include="Models\SensorRecord.cs" />
     <Compile Include="Models\Configuration\ServiceConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

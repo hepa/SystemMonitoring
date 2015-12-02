@@ -1,4 +1,5 @@
 ﻿using SM.Contracts.Models;
+using SM.Contracts.Models.Configuration;
 
 namespace SM.Configuration.Configuration
 {

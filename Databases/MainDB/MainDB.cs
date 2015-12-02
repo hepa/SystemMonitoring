@@ -43,9 +43,11 @@ namespace MainDB
             }
         }
 
-        public static void CreateDB(string fileName)
+        public static void CreateDB()
         {
-            SQLiteConnection.CreateFile(fileName);
+            SQLiteConnection.CreateFile(string.Format("{0}.sqlite", DB_NAME));
+
+            
         }
 
         private static SQLiteConnection CreateConnection(string connectionString)

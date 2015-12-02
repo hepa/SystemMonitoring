@@ -10,7 +10,7 @@ namespace SM.Configuration.Service
     {
         public override void OnStartUp()
         {
-            var c = MainDB.MainDB.Connection;
+            MainDB.MainDB.CreateDB();
         }
     }
 }
