@@ -1,0 +1,1 @@
+xbuild pConfiguration=Release SystemMonitoring.sln pTargetFrameworkVersion=v4.6
