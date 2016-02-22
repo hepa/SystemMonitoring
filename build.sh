@@ -1,1 +1,1 @@
-xbuild pConfiguration=Release SystemMonitoring.sln pTargetFrameworkVersion=v4.6
+xbuild /p:Configuration=Release src/Soloco.RealTimeWeb.sln /p:TargetFrameworkVersion="v4.6"
