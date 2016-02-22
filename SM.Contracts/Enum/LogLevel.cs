@@ -8,13 +8,12 @@ namespace SM.Contracts.Enum
         /// <summary>
         /// The message weight.
         /// </summary>        
-        None = 0,
-        Fatal = 1,
-        Error = 1 << 1,
-        Warn = 1 << 2,
-        Info = 1 << 3,
-        Debug = 1 << 4,
-        Trace = 1 << 5
-
+        None = 0x0,
+        Fatal = 0x1,
+        Error = 0x2,
+        Warn = 0x4,
+        Info = 0x8,
+        Debug = 0x10,
+        Trace = 0x20
     }
 }

@@ -40,19 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\CodeAttribute.cs" />
+    <Compile Include="Attributes\DescriptionAttribute.cs" />
+    <Compile Include="Enum\ErrorCodes.cs" />
     <Compile Include="Enum\LogLevel.cs" />
-    <Compile Include="Models\Codes\InformationCodes.cs" />
-    <Compile Include="Models\Codes\WarningCodes.cs" />
-    <Compile Include="Models\Codes\ErrorCodes.cs" />
-    <Compile Include="Models\Codes\CoreCode.cs" />
     <Compile Include="Messages\Result\Result.cs" />
-    <Compile Include="Messages\Result\ResultCode.cs" />
     <Compile Include="Models\Configuration\GlobalConfigurations.cs" />
     <Compile Include="Models\Configuration\LogConfigurations.cs" />
     <Compile Include="Models\Configuration\SqlConfigurations.cs" />
+    <Compile Include="Models\Connection\IConnection.cs" />
+    <Compile Include="Models\Core\RequestContext.cs" />
     <Compile Include="Models\SensorRecord.cs" />
     <Compile Include="Models\Configuration\ServiceConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Exceptions\SMException.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

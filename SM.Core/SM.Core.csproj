@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\SMConfigurations.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Extensions\ProcessExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Parser\JsonParser.cs" />

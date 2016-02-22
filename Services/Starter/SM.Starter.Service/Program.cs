@@ -1,5 +1,4 @@
-﻿using SM.Monitoring.Service;
-using Topshelf;
+﻿using Topshelf;
 
 namespace SM.Starter.Service
 {

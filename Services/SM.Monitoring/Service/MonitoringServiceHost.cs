@@ -1,10 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using SM.Contracts.Models.Result;
-using SM.Contracts.Models.Codes;
-using SM.Core.Parser;
+﻿using SM.Core.Parser;
 using SM.Core.Services;
 using Timer = System.Timers.Timer;
 

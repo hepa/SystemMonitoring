@@ -2,6 +2,6 @@
 {
     public class SqlConfigurations
     {
-         
+        public int ConnectionTimeOutInMinutes { get; set; } = 60;
     }
 }
