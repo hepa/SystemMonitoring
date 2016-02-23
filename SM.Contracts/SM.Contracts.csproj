@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Attributes\CodeAttribute.cs" />
     <Compile Include="Attributes\DescriptionAttribute.cs" />
+    <Compile Include="Attributes\SensorClassAttribute.cs" />
+    <Compile Include="Attributes\SensorNameAttribute.cs" />
     <Compile Include="Enum\ErrorCodes.cs" />
     <Compile Include="Enum\LogLevel.cs" />
     <Compile Include="Messages\Result\Result.cs" />
@@ -50,6 +53,10 @@
     <Compile Include="Models\Configuration\SqlConfigurations.cs" />
     <Compile Include="Models\Connection\IConnection.cs" />
     <Compile Include="Models\Core\RequestContext.cs" />
+    <Compile Include="Models\HWiNFO\CPU.cs" />
+    <Compile Include="Models\HWiNFO\Data.cs" />
+    <Compile Include="Models\HWiNFO\HwInfo.cs" />
+    <Compile Include="Models\HWiNFO\Memory.cs" />
     <Compile Include="Models\SensorRecord.cs" />
     <Compile Include="Models\Configuration\ServiceConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

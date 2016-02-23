@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainDB
+namespace MainDatabase
 {
     public static class MainDB
     {

@@ -11,7 +11,7 @@ namespace SM.Logs.Implementations.EventViewLog
             NewMessage += OnNewMessage;
         }
 
-        private void OnNewMessage(Log.Entry entry)
+        private static void OnNewMessage(Entry entry)
         {
             const string application = "System Monitoring";
             var source = entry.File;

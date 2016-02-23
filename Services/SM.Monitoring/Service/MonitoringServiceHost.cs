@@ -15,13 +15,14 @@ namespace SM.Monitoring.Service
         public override void OnStartUp()
         {
             _timer = new Timer(5000);
-            _timer.Elapsed += Elapsed;
+            //_timer.Elapsed += Elapsed;
             _timer.Start();
+            Elapsed(null, null);
         }
 
         private void Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {            
-            JsonParser.Parse();
+            JsonParser.ParseIntoContract();
         }
 
         public override void OnStop()
