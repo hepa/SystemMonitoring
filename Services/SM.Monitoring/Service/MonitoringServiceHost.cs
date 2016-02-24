@@ -1,4 +1,6 @@
-﻿using SM.Core.Parser;
+﻿using System;
+using SM.Contracts.Models.HWiNFO;
+using SM.Core.Parser;
 using SM.Core.Services;
 using Timer = System.Timers.Timer;
 
@@ -21,8 +23,10 @@ namespace SM.Monitoring.Service
         }
 
         private void Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {            
-            JsonParser.ParseIntoContract();
+        {
+            var hwInfo = JsonParser.ParseIntoContract();
+            var bits = DataType.ConverTo(hwInfo.Memory.VirtualMemoryAvailable, DataUnit.b);
+            Console.WriteLine(bits);
         }
 
         public override void OnStop()

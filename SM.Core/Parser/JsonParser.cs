@@ -74,7 +74,7 @@ namespace SM.Core.Parser
             }
         }
 
-        public static void ParseIntoContract()
+        public static HwInfo ParseIntoContract()
         {
             var client = new WebClient();
             //var downloadString = client.DownloadString(@""http://localhost:55555"");
@@ -94,6 +94,14 @@ namespace SM.Core.Parser
                     ""SensorValue"": ""3428"",
                     ""SensorUnit"": ""MB"",
                     ""SensorUpdateTime"": 1456258608
+                  },
+                  {
+                    ""SensorApp"": ""HWiNFO"",
+                    ""SensorClass"": ""CPU [#0]: Intel Core i5-4590"",
+                    ""SensorName"": ""Core #0 VID"",
+                    ""SensorValue"": ""1,0738525390625"",
+                    ""SensorUnit"": ""V"",
+                    ""SensorUpdateTime"": 1456336430
                   }]";
 
             var interestingRecords = new List<SensorRecord>();
@@ -108,14 +116,34 @@ namespace SM.Core.Parser
                 var record = JsonConvert.DeserializeObject<SensorRecord>(jRecord.ToString());
                 foreach (var property in properties)
                 {
-                    var customAttributeData = (SensorClassAttribute)property.PropertyType.GetCustomAttribute(typeof (SensorClassAttribute),false);
+                    SensorClassAttribute customAttributeData = null;
+                    if (property.PropertyType.IsGenericType)
+                    {
+                        customAttributeData =
+                            (SensorClassAttribute)
+                                property.PropertyType.GetGenericArguments()[0].GetCustomAttribute(
+                                    typeof (SensorClassAttribute), false);
+                    }
+                    else
+                    {
+                        customAttributeData = (SensorClassAttribute)property.PropertyType.GetCustomAttribute(typeof(SensorClassAttribute), false);
+                    }                    
                     var regex = new Regex(customAttributeData.ClassNameRegex);
 
                     if (regex.IsMatch(record.SensorClass))
                     {
-                        var propertyInfo = property.PropertyType.GetProperties().First(prop =>
+                        var type = property.PropertyType;
+                        if (type.IsGenericType && !type.Name.Contains("Data"))
                         {
-                            var customAttribute = (SensorNameAttribute)prop.GetCustomAttribute(typeof (SensorNameAttribute), false);
+                            type = type.GetGenericArguments()[0];
+                        }
+
+                        var propertyInfo = type.GetProperties().First(prop =>
+                        {
+                            var customAttribute = (SensorNameAttribute)prop.GetCustomAttribute(typeof(SensorNameAttribute), false);
+                            
+                            if (customAttribute == null) return false;
+
                             var regexName = new Regex(customAttribute.SensorNameRegex);
                             if (regexName.IsMatch(record.SensorName))
                             {
@@ -126,10 +154,36 @@ namespace SM.Core.Parser
                                 return false;
                             }
                         });
-                        propertyInfo.SetValue(propertyInfo, new Data<int> {Value = Convert.ToInt32(record.SensorValue), Unit = "MB"});
+
+                        if (propertyInfo == null) continue;
+                        var value = property.GetValue(hwinfo);
+                        var proptype = propertyInfo.PropertyType;
+
+                        if (proptype.GetGenericTypeDefinition() == typeof (List<>))
+                        {
+                            var data = (dynamic)Activator.CreateInstance(propertyInfo.PropertyType.GetGenericArguments()[0]);
+                            var valueType = propertyInfo.PropertyType.GetGenericArguments()[0].GetProperty("Value").PropertyType;
+
+                            data.Value = (dynamic)Convert.ChangeType(record.SensorValue, valueType);
+                            data.Unit = new DataType { Unit = DataUnit.MB };
+
+                            value = propertyInfo.GetValue(property);
+                            propertyInfo.SetValue(value, data);
+                        }
+                        else
+                        {
+                            var data = (dynamic)Activator.CreateInstance(proptype);
+                            var valueType = proptype.GetProperty("Value").PropertyType;
+
+                            data.Value = (dynamic)Convert.ChangeType(record.SensorValue, valueType);
+                            data.Unit = new DataType { Unit = DataUnit.MB };
+
+                            propertyInfo.SetValue(value, data);
+                        }                        
                     }
                 }
             }
+            return hwinfo;
         }
     }
 }

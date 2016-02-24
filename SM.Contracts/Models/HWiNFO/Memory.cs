@@ -6,6 +6,9 @@ namespace SM.Contracts.Models.HWiNFO
     public class Memory
     {
         [SensorName("Virtual Memory Commited")]
-        public Data<int> VirtualMemoryCommited { get; set; }
+        public Data<int, DataType> VirtualMemoryCommited { get; set; }
+
+        [SensorName("Virtual Memory Available")]
+        public Data<int, DataType> VirtualMemoryAvailable { get; set; }
     }
 }

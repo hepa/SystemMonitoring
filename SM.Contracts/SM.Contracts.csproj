@@ -55,8 +55,11 @@
     <Compile Include="Models\Core\RequestContext.cs" />
     <Compile Include="Models\HWiNFO\CPU.cs" />
     <Compile Include="Models\HWiNFO\Data.cs" />
+    <Compile Include="Models\HWiNFO\DataType.cs" />
+    <Compile Include="Models\HWiNFO\DataUnit.cs" />
     <Compile Include="Models\HWiNFO\HwInfo.cs" />
     <Compile Include="Models\HWiNFO\Memory.cs" />
+    <Compile Include="Models\HWiNFO\UnitType.cs" />
     <Compile Include="Models\SensorRecord.cs" />
     <Compile Include="Models\Configuration\ServiceConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
