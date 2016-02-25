@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,7 +39,10 @@ namespace SM.Core.Parser
                 }
             }
 
+        }
 
+        public static void WriteIntoFile(HwInfo hi)
+        {
             var date = DateTime.UtcNow.ToString("d");
             string path = string.Format(@"c:\sensor\log-{0}.txt", date);
 
@@ -51,13 +55,8 @@ namespace SM.Core.Parser
             {
                 // Create a file to write to.
                 using (StreamWriter sw = File.CreateText(path))
-                {
-                    foreach (var interestingRecord in interestingRecords)
-                    {
-                        sw.Write(interestingRecord.SensorValue);
-                        sw.Write("; ");
-                    }
-                    sw.WriteLine();
+                {                    
+                    sw.WriteLine(JsonConvert.SerializeObject(hi));
                 }
             }
 
@@ -65,44 +64,14 @@ namespace SM.Core.Parser
             // if it is not deleted.
             using (StreamWriter sw = File.AppendText(path))
             {
-                foreach (var interestingRecord in interestingRecords)
-                {
-                    sw.Write(interestingRecord.SensorValue);
-                    sw.Write(";");
-                }
-                sw.WriteLine();
+                sw.WriteLine(JsonConvert.SerializeObject(hi));
             }
         }
 
         public static HwInfo ParseIntoContract()
         {
             var client = new WebClient();
-            //var downloadString = client.DownloadString(@""http://localhost:55555"");
-            var downloadString = @"[
-                  {
-                                ""SensorApp"": ""HWiNFO"",
-                    ""SensorClass"": ""System"",
-                    ""SensorName"": ""Virtual Memory Commited"",
-                    ""SensorValue"": ""6602"",
-                    ""SensorUnit"": ""MB"",
-                    ""SensorUpdateTime"": 1456258608
-                  },
-                  {
-                                ""SensorApp"": ""HWiNFO"",
-                    ""SensorClass"": ""System"",
-                    ""SensorName"": ""Virtual Memory Available"",
-                    ""SensorValue"": ""3428"",
-                    ""SensorUnit"": ""MB"",
-                    ""SensorUpdateTime"": 1456258608
-                  },
-                  {
-                    ""SensorApp"": ""HWiNFO"",
-                    ""SensorClass"": ""CPU [#0]: Intel Core i5-4590"",
-                    ""SensorName"": ""Core #0 VID"",
-                    ""SensorValue"": ""1,0738525390625"",
-                    ""SensorUnit"": ""V"",
-                    ""SensorUpdateTime"": 1456336430
-                  }]";
+            var downloadString = client.DownloadString(@"http://localhost:55555");
 
             var interestingRecords = new List<SensorRecord>();
 
@@ -122,12 +91,12 @@ namespace SM.Core.Parser
                         customAttributeData =
                             (SensorClassAttribute)
                                 property.PropertyType.GetGenericArguments()[0].GetCustomAttribute(
-                                    typeof (SensorClassAttribute), false);
+                                    typeof(SensorClassAttribute), false);
                     }
                     else
                     {
                         customAttributeData = (SensorClassAttribute)property.PropertyType.GetCustomAttribute(typeof(SensorClassAttribute), false);
-                    }                    
+                    }
                     var regex = new Regex(customAttributeData.ClassNameRegex);
 
                     if (regex.IsMatch(record.SensorClass))
@@ -138,10 +107,10 @@ namespace SM.Core.Parser
                             type = type.GetGenericArguments()[0];
                         }
 
-                        var propertyInfo = type.GetProperties().First(prop =>
+                        var propertyInfo = type.GetProperties().FirstOrDefault(prop =>
                         {
                             var customAttribute = (SensorNameAttribute)prop.GetCustomAttribute(typeof(SensorNameAttribute), false);
-                            
+
                             if (customAttribute == null) return false;
 
                             var regexName = new Regex(customAttribute.SensorNameRegex);
@@ -159,27 +128,63 @@ namespace SM.Core.Parser
                         var value = property.GetValue(hwinfo);
                         var proptype = propertyInfo.PropertyType;
 
-                        if (proptype.GetGenericTypeDefinition() == typeof (List<>))
+                        if (proptype.GetGenericTypeDefinition() == typeof(List<>))
                         {
-                            var data = (dynamic)Activator.CreateInstance(propertyInfo.PropertyType.GetGenericArguments()[0]);
+                            var VIDs = (dynamic)Activator.CreateInstance(propertyInfo.PropertyType.GetGenericArguments()[0]);
                             var valueType = propertyInfo.PropertyType.GetGenericArguments()[0].GetProperty("Value").PropertyType;
+                            var VIDsUnitType = propertyInfo.PropertyType.GetGenericArguments()[0].GetProperty("Unit").PropertyType;
 
-                            data.Value = (dynamic)Convert.ChangeType(record.SensorValue, valueType);
-                            data.Unit = new DataType { Unit = DataUnit.MB };
+                            VIDs.Value = (dynamic)Convert.ChangeType(record.SensorValue, valueType);
+                            VIDs.Unit = (dynamic)Activator.CreateInstance(VIDsUnitType);
 
-                            value = propertyInfo.GetValue(property);
-                            propertyInfo.SetValue(value, data);
+                            // do not create always a new instance
+                            dynamic dynVids = null;
+                            
+                            var cpuType = value.GetType().GetGenericArguments()[0];
+
+                            dynamic cpu = null;
+                            dynamic cpus = (dynamic) value;
+                            if (cpus.Count != 0)
+                            {
+                                cpu = cpus[0];
+                                dynVids = propertyInfo.GetValue(cpu);
+                            }
+                            else
+                            {
+                                dynVids = Activator.CreateInstance(propertyInfo.PropertyType);
+                            }
+
+                            dynVids.Add(VIDs);
+
+                            var CPUs = (dynamic)value;
+                            var dynCPU = Activator.CreateInstance(cpuType);
+
+                            var actProp = dynCPU.GetType().GetProperties().First(p => p.Name == propertyInfo.Name);
+                            actProp.SetValue(dynCPU, dynVids);
+
+                            if (CPUs.Count == 0)
+                            {
+                                var d = (dynamic) dynCPU;
+                                CPUs.Add(d);
+                            }                            
+                            property.SetValue(hwinfo, CPUs);
                         }
                         else
                         {
                             var data = (dynamic)Activator.CreateInstance(proptype);
                             var valueType = proptype.GetProperty("Value").PropertyType;
+                            var unitType = proptype.GetProperty("Unit").PropertyType;
 
                             data.Value = (dynamic)Convert.ChangeType(record.SensorValue, valueType);
-                            data.Unit = new DataType { Unit = DataUnit.MB };
+                            data.Unit = (dynamic)Activator.CreateInstance(unitType);
 
-                            propertyInfo.SetValue(value, data);
-                        }                        
+                            if (value.GetType().IsGenericType)
+                            {
+                                value = ((dynamic) value)[0];
+                            }
+
+                            propertyInfo.SetValue(value, (dynamic)data);
+                        }
                     }
                 }
             }

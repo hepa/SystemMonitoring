@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using SM.Contracts.Models.HWiNFO;
 using SM.Core.Parser;
 using SM.Core.Services;
@@ -16,8 +17,8 @@ namespace SM.Monitoring.Service
 
         public override void OnStartUp()
         {
-            _timer = new Timer(5000);
-            //_timer.Elapsed += Elapsed;
+            _timer = new Timer(1000);
+            _timer.Elapsed += Elapsed;
             _timer.Start();
             Elapsed(null, null);
         }
@@ -26,7 +27,9 @@ namespace SM.Monitoring.Service
         {
             var hwInfo = JsonParser.ParseIntoContract();
             var bits = DataType.ConverTo(hwInfo.Memory.VirtualMemoryAvailable, DataUnit.b);
-            Console.WriteLine(bits);
+            var serializeObject = JsonConvert.SerializeObject(hwInfo);
+            Console.WriteLine(serializeObject);
+            JsonParser.WriteIntoFile(hwInfo);
         }
 
         public override void OnStop()
