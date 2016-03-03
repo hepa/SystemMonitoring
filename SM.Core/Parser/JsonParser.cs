@@ -44,11 +44,11 @@ namespace SM.Core.Parser
         public static void WriteIntoFile(HwInfo hi)
         {
             var date = DateTime.UtcNow.ToString("d");
-            string path = string.Format(@"c:\sensor\log-{0}.txt", date);
+            string path = string.Format(@"d:\sensor\log-{0}.txt", date);
 
-            if (!Directory.Exists(@"c:\sensor"))
+            if (!Directory.Exists(@"d:\sensor"))
             {
-                Directory.CreateDirectory(@"c:\sensor");
+                Directory.CreateDirectory(@"d:\sensor");
             }
 
             if (!File.Exists(path))
@@ -125,9 +125,10 @@ namespace SM.Core.Parser
                         });
 
                         if (propertyInfo == null) continue;
-                        var value = property.GetValue(hwinfo);
+                        var mainValue = property.GetValue(hwinfo);
                         var proptype = propertyInfo.PropertyType;
 
+                        var mainType = mainValue.GetType();
                         if (proptype.GetGenericTypeDefinition() == typeof(List<>))
                         {
                             var VIDs = (dynamic)Activator.CreateInstance(propertyInfo.PropertyType.GetGenericArguments()[0]);
@@ -139,34 +140,57 @@ namespace SM.Core.Parser
 
                             // do not create always a new instance
                             dynamic dynVids = null;
-                            
-                            var cpuType = value.GetType().GetGenericArguments()[0];
 
-                            dynamic cpu = null;
-                            dynamic cpus = (dynamic) value;
-                            if (cpus.Count != 0)
+                            var mainIsGeneric = mainType.IsGenericType;
+                            if (mainIsGeneric)
                             {
-                                cpu = cpus[0];
-                                dynVids = propertyInfo.GetValue(cpu);
+                                mainType = mainType.GetGenericArguments()[0];
+
+                                dynamic cpu = null;
+                                dynamic cpus = (dynamic) mainValue;
+                                if (cpus.Count != 0)
+                                {
+                                    cpu = cpus[0];
+                                    dynVids = propertyInfo.GetValue(cpu);
+                                }
+                                else
+                                {
+                                    dynVids = Activator.CreateInstance(propertyInfo.PropertyType);
+                                }
                             }
                             else
                             {
-                                dynVids = Activator.CreateInstance(propertyInfo.PropertyType);
+                                dynVids = propertyInfo.GetValue(mainValue);
                             }
+
+                            
 
                             dynVids.Add(VIDs);
 
-                            var CPUs = (dynamic)value;
-                            var dynCPU = Activator.CreateInstance(cpuType);
+                            var CPUs = (dynamic)mainValue;                                                        
 
-                            var actProp = dynCPU.GetType().GetProperties().First(p => p.Name == propertyInfo.Name);
-                            actProp.SetValue(dynCPU, dynVids);
-
-                            if (CPUs.Count == 0)
+                            if (mainIsGeneric)
                             {
-                                var d = (dynamic) dynCPU;
-                                CPUs.Add(d);
-                            }                            
+                                var dynCPU = Activator.CreateInstance(mainType);
+                                var actProp = dynCPU.GetType().GetProperties().First(p => p.Name == propertyInfo.Name);
+                                actProp.SetValue(dynCPU, dynVids);
+
+                                if (CPUs.Count == 0)
+                                {
+                                    var d = (dynamic) dynCPU;
+                                    CPUs.Add(d);
+                                }
+                            }
+                            else
+                            {
+                                var subType = mainValue.GetType().GetProperties().First(p => p.Name == propertyInfo.Name);
+
+                                var act = (dynamic)subType.GetValue(mainValue);
+                                var subIsGeneric = subType.PropertyType.IsGenericType;                                
+
+                                subType.SetValue(CPUs, dynVids);
+                            }
+
                             property.SetValue(hwinfo, CPUs);
                         }
                         else
@@ -178,12 +202,12 @@ namespace SM.Core.Parser
                             data.Value = (dynamic)Convert.ChangeType(record.SensorValue, valueType);
                             data.Unit = (dynamic)Activator.CreateInstance(unitType);
 
-                            if (value.GetType().IsGenericType)
+                            if (mainType.IsGenericType)
                             {
-                                value = ((dynamic) value)[0];
+                                mainValue = ((dynamic) mainValue)[0];
                             }
 
-                            propertyInfo.SetValue(value, (dynamic)data);
+                            propertyInfo.SetValue(mainValue, (dynamic)data);
                         }
                     }
                 }

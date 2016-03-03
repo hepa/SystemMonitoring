@@ -55,9 +55,11 @@
     <Compile Include="Models\Core\RequestContext.cs" />
     <Compile Include="Models\HWiNFO\CPU.cs" />
     <Compile Include="Models\HWiNFO\Data.cs" />
+    <Compile Include="Models\HWiNFO\Motherboard.cs" />
     <Compile Include="Models\HWiNFO\Types\DataType.cs" />
     <Compile Include="Models\HWiNFO\Types\FrequencyType.cs" />
     <Compile Include="Models\HWiNFO\Types\RatioType.cs" />
+    <Compile Include="Models\HWiNFO\Types\RotationType.cs" />
     <Compile Include="Models\HWiNFO\Types\TemperatureType.cs" />
     <Compile Include="Models\HWiNFO\Units\DataUnit.cs" />
     <Compile Include="Models\HWiNFO\Units\FrequencyUnit.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Models\HWiNFO\Types\UnitType.cs" />
     <Compile Include="Models\HWiNFO\Types\VoltageType.cs" />
     <Compile Include="Models\HWiNFO\Units\RatioUnit.cs" />
+    <Compile Include="Models\HWiNFO\Units\RotationUnit.cs" />
     <Compile Include="Models\HWiNFO\Units\TemperatureUnit.cs" />
     <Compile Include="Models\HWiNFO\Units\VoltageUnit.cs" />
     <Compile Include="Models\SensorRecord.cs" />
