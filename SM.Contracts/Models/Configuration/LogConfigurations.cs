@@ -4,6 +4,6 @@ namespace SM.Contracts.Models.Configuration
 {
     public class LogConfigurations
     {
-        public LogLevel DefaultLogggingLevel = LogLevel.Trace;
+        public LogLevel DefaultLoggingLevel = LogLevel.Trace;
     }
 }

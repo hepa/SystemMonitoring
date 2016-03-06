@@ -23,7 +23,9 @@ namespace SM.Core.Services
             return new ServiceConfiguration
             {
                 GlobalConfigurations = new GlobalConfigurations(),
-                LogConfigurations = new LogConfigurations()
+                LogConfigurations = new LogConfigurations(),
+                SqlConfigurations = new SqlConfigurations(),
+                ApiConfiguration = new ApiConfiguration()
             };
         }
     }

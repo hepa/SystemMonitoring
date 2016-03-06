@@ -48,6 +48,7 @@
     <Compile Include="Enum\ErrorCodes.cs" />
     <Compile Include="Enum\LogLevel.cs" />
     <Compile Include="Messages\Result\Result.cs" />
+    <Compile Include="Models\Configuration\ApiConfiguration.cs" />
     <Compile Include="Models\Configuration\GlobalConfigurations.cs" />
     <Compile Include="Models\Configuration\LogConfigurations.cs" />
     <Compile Include="Models\Configuration\SqlConfigurations.cs" />

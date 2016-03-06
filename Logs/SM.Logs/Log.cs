@@ -19,37 +19,37 @@ namespace SM.Logs
         /// <summary>
         /// Contains a value indicating whether debug level messages are currently enabled.
         /// </summary>
-        public volatile bool IsDebugEnabled = SMConfigurations.Current.LogConfigurations.DefaultLogggingLevel >= LogLevel.Debug;
+        public volatile bool IsDebugEnabled = SMConfigurations.Current.LogConfigurations.DefaultLoggingLevel >= LogLevel.Debug;
 
         /// <summary>
         /// Contains a value indicating whether error level messages are currently enabled.
         /// </summary>
-        public volatile bool IsErrorEnabled = SMConfigurations.Current.LogConfigurations.DefaultLogggingLevel >= LogLevel.Error;
+        public volatile bool IsErrorEnabled = SMConfigurations.Current.LogConfigurations.DefaultLoggingLevel >= LogLevel.Error;
 
         /// <summary>
         /// Contains a value indicating whether fatal level messages are currently enabled.
         /// </summary>
-        public volatile bool IsFatalEnabled = SMConfigurations.Current.LogConfigurations.DefaultLogggingLevel >= LogLevel.Fatal;
+        public volatile bool IsFatalEnabled = SMConfigurations.Current.LogConfigurations.DefaultLoggingLevel >= LogLevel.Fatal;
 
         /// <summary>
         /// Contains a value indicating whether info level messages are currently enabled.
         /// </summary>
-        public volatile bool IsInfoEnabled = SMConfigurations.Current.LogConfigurations.DefaultLogggingLevel >= LogLevel.Info;
+        public volatile bool IsInfoEnabled = SMConfigurations.Current.LogConfigurations.DefaultLoggingLevel >= LogLevel.Info;
 
         /// <summary>
         /// Contains a value indicating whether trace level messages are currently enabled.
         /// </summary>
-        public volatile bool IsTraceEnabled = SMConfigurations.Current.LogConfigurations.DefaultLogggingLevel >= LogLevel.Trace;
+        public volatile bool IsTraceEnabled = SMConfigurations.Current.LogConfigurations.DefaultLoggingLevel >= LogLevel.Trace;
 
         /// <summary>
         /// Contains a value indicating whether warn level messages are currently enabled.
         /// </summary>
-        public volatile bool IsWarnEnabled = SMConfigurations.Current.LogConfigurations.DefaultLogggingLevel >= LogLevel.Warn;
+        public volatile bool IsWarnEnabled = SMConfigurations.Current.LogConfigurations.DefaultLoggingLevel >= LogLevel.Warn;
 
         /// <summary>
         /// The current logging level.
         /// </summary>
-        public volatile LogLevel LoggingLevel = SMConfigurations.Current.LogConfigurations.DefaultLogggingLevel;
+        public volatile LogLevel LoggingLevel = SMConfigurations.Current.LogConfigurations.DefaultLoggingLevel;
 
         /// <summary>
         /// Occurs when a new message was added to the log.

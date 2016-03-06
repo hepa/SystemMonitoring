@@ -7,5 +7,7 @@
         public GlobalConfigurations GlobalConfigurations { get; set; }
 
         public SqlConfigurations SqlConfigurations { get; set; }
+
+        public ApiConfiguration ApiConfiguration { get; set; }
     }
 }
