@@ -4,7 +4,7 @@ using SM.Contracts.Attributes;
 
 namespace SM.Contracts.Models.HWiNFO
 {
-    [SensorClass("CPU \\[\\#.\\]")]
+    [SensorClass("CPU \\[\\#[0-9]\\]")]
     public class CPU
     {
         public int Cores => VIDS.Count;

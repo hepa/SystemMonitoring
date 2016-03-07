@@ -18,7 +18,7 @@ namespace SM.Monitoring.Service
         public override void OnStartUp()
         {
             _timer = new Timer(1000);
-            _timer.Elapsed += Elapsed;
+            //_timer.Elapsed += Elapsed;
             _timer.Start();
             Elapsed(null, null);
         }

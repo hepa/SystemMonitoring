@@ -56,6 +56,7 @@
     <Compile Include="Models\Core\RequestContext.cs" />
     <Compile Include="Models\HWiNFO\CPU.cs" />
     <Compile Include="Models\HWiNFO\Data.cs" />
+    <Compile Include="Models\HWiNFO\GPU.cs" />
     <Compile Include="Models\HWiNFO\Motherboard.cs" />
     <Compile Include="Models\HWiNFO\Types\DataType.cs" />
     <Compile Include="Models\HWiNFO\Types\FrequencyType.cs" />
