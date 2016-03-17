@@ -1,4 +1,5 @@
 ﻿
+using System;
 using SM.Configuration.Configuration;
 using SM.Contracts.Models;
 using SM.Contracts.Models.Configuration;
@@ -27,6 +28,12 @@ namespace SM.Core.Services
                 SqlConfigurations = new SqlConfigurations(),
                 ApiConfiguration = new ApiConfiguration()
             };
+        }
+
+        protected void WriteInfo(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(message);            
         }
     }
 }

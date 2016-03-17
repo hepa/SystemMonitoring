@@ -17,7 +17,7 @@ namespace SM.Contracts.Models.HWiNFO
             Memory = new Memory();
             CentralProcessingUnit = new CPU();
             Motherboard = new Motherboard();
-            GraphicsProcessingUnits = new List<GPU>();
+            GraphicsProcessingUnits = new List<GPU>() {new GPU()};
         }
     }
 }

@@ -204,18 +204,25 @@ namespace SM.Core.Parser
 
                             if (mainType.IsGenericType)
                             {
-                                if (((dynamic)mainValue).Count == 0)
-                                {
+//                                if (((dynamic) mainValue).Count == 0)
+//                                {
                                     var dynMain = Activator.CreateInstance(mainType);
-                                    var genericArgument = dynMain.GetType().GetGenericArguments()[0];
-                                    var actProp = genericArgument.GetProperties().First(p => p.Name == propertyInfo.Name);
-                                    actProp.SetValue(dynMain, data);
-                                    ((dynamic) mainValue).Add(dynMain);
+                                    var gpuType = dynMain.GetType().GetGenericArguments()[0];
+                                    var actProp = gpuType.GetProperties().First(p => p.Name == propertyInfo.Name);
 
-                                }                                
+                                //var gpu = (dynamic) Activator.CreateInstance(gpuType);
+                                //var gpulist = ((dynamic) dynMain).First();
+
+                                dynamic gpu = ((dynamic)mainValue)[0];
+                                actProp.SetValue(gpu, data);                                                                        
+                                    //((dynamic) mainValue).Add(gpu);
+
+//                                }                                
                             }
-
-                            propertyInfo.SetValue(mainValue, (dynamic)data);
+                            else
+                            {
+                                propertyInfo.SetValue(mainValue, (dynamic)data);
+                            }                            
                         }
                     }
                 }

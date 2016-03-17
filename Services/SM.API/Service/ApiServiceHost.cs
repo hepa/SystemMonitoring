@@ -14,10 +14,11 @@ namespace SM.API.Service
 
         public override void OnStartUp()
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("API is started.");
-            var baseAddress = string.Format(@"http://localhost:{0}", SMConfigurations.Current.ApiConfiguration.PortNumber);
+            Console.ForegroundColor = ConsoleColor.White;            
+            var baseAddress = string.Format("{0}:{1}", SMConfigurations.Current.ApiConfiguration.URL, SMConfigurations.Current.ApiConfiguration.PortNumber);
             _server = WebApp.Start<Startup>(baseAddress);
+
+            WriteInfo(string.Format("API is started, and listening on: {0}", baseAddress));
         }
 
         public override void OnStop()

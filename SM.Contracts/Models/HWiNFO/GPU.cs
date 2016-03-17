@@ -13,7 +13,7 @@ namespace SM.Contracts.Models.HWiNFO
         [SensorName("GPU VDDC")]
         public Data<double, VoltageType> VDDC { get; set; }
 
-        [SensorName("GPU Fan")]
+        [SensorName("^GPU Fan$")]
         public Data<int, RotationType> FanRPM { get; set; }
 
         [SensorName("GPU Clock")]
@@ -29,13 +29,13 @@ namespace SM.Contracts.Models.HWiNFO
         public Data<double, PercentageType> D3DUsage { get; set; }
 
         [SensorName("GPU Fan Speed")]
-        public Data<double, PercentageType> FanSpeed { get; set; }
+        public Data<int, PercentageType> FanSpeed { get; set; }
 
         [SensorName("GPU D3D Memory Dedicated")]
-        public Data<int, PercentageType> MemoryDedicated { get; set; }
+        public Data<double, PercentageType> MemoryDedicated { get; set; }
 
         [SensorName("GPU D3D Memory Dynamic")]
-        public Data<int, PercentageType> MemoryDynamic { get; set; }
+        public Data<double, PercentageType> MemoryDynamic { get; set; }
 
         [SensorName("GPU VRM Temperature[0-9]")]
         public List<Data<double, TemperatureType>> VrmTemperatures { get; set; }
@@ -67,16 +67,16 @@ namespace SM.Contracts.Models.HWiNFO
             MemoryClock = new Data<double, FrequencyType>();
             Utilization = new Data<double, PercentageType>();
             D3DUsage = new Data<double, PercentageType>();
-            FanSpeed = new Data<double, PercentageType>();
-            MemoryDedicated = new Data<int, PercentageType>();
-            MemoryDynamic = new Data<int, PercentageType>();
+            FanSpeed = new Data<int, PercentageType>();
+            MemoryDedicated = new Data<double, PercentageType>();
+            MemoryDynamic = new Data<double, PercentageType>();
             VrmTemperatures = new List<Data<double, TemperatureType>>();
             VrmVoltageOut = new Data<double, VoltageType>();
             VrmVoltageIn = new Data<double, VoltageType>();
             VrmCurrentOut = new Data<double, VoltageType>();
             VrmCurrentIn = new Data<double, VoltageType>();
             VrmPowerOut = new Data<double, VoltageType>();
-            VrmPowerOut = new Data<double, VoltageType>();
+            VrmPowerIn = new Data<double, VoltageType>();
         }
     }           
 }
